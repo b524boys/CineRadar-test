@@ -1,0 +1,579 @@
+/**
+ * 前台CSS文件
+ */
+
+
+
+/*头部lOGO条  固定在最顶端--------------------------------begin*/
+.head-container {
+    border-bottom: 1px solid #EBEEF5;
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+}
+/*头部lOGO条  固定在最顶端--------------------------------end*/
+
+
+
+/*logo部分样式--------------------------------begin*/
+.head-container .header-logo-box {
+    min-width: 150px;
+    max-width: 400px;
+    margin-left: 55px;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+}
+.header-logo-box .header-logo{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    background-image: url("@/assets/imgs/front/movie_logo.png");
+    background-size: 100%;
+    /*display: none;*/
+}
+.header-logo-box .logo-title{
+    text-align: left;
+    line-height: 60px;
+    height: 60px;
+    color: #ff9900;
+    font-size: 18px;
+    font-weight: bolder
+}
+/*logo部分样式--------------------------------end*/
+
+
+
+/*搜索框样式--------------------------------begin*/
+/*搜索框父元素宽度*/
+.header-search-box {
+    flex:1;
+}
+/*搜索框宽度*/
+.header-search-box .search-input{
+    width: 50%;
+}
+/*搜索框高度*/
+.header-search-box .el-input--small .el-input__inner {
+    height: 40px;
+    line-height: 40px;
+}
+/*搜索框样式--------------------------------end*/
+
+
+
+
+/*用户信息---------------------------------begin*/
+/*用户信息宽度*/
+.header-user-box {
+    width: 150px;
+}
+.user-info{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.user-info img{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+.user-info .nickname{
+    margin-left: 5px;
+    font-size: 14px;
+    color: #000;
+}
+/*用户信息---------------------------------end*/
+
+
+
+
+/*导航条---------------------------------begin*/
+.navigate-container {
+    font-size: 14px;
+    background-color: #fff;
+    border-bottom: 1px solid #EBEEF5;
+    margin-top: 60px;
+    margin-bottom: 1px;
+}
+/*菜单起始距离左边55px*/
+.navigate-container .navigate-menus{
+    margin-left: 55px;
+}
+/*水平菜单下边线隐藏*/
+.navigate-container .el-menu.el-menu--horizontal{
+    border-bottom: none;
+}
+/*菜单间隔50px;*/
+.navigate-menus .menu-item{
+    cursor: pointer;
+    margin-right: 50px;
+}
+/*菜单原本就有border-bottom的颜色, 这里颜色要!important*/
+.navigate-container .el-menu--horizontal > .el-menu-item.is-active {
+    border-bottom: 2px solid #ff9900!important;
+}
+.el-menu-item.is-active{
+    color: #ff9900!important;
+}
+/*导航条---------------------------------end*/
+
+
+/*内容主体区域---------------------------------begin*/
+.main-box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.main-container{
+    margin: 10px 55px 30px 55px;
+    width: 1100px;
+    /*height: 100vh;*/
+}
+/*内容主体区域---------------------------------end*/
+
+
+
+/*商品分类---------------------------------begin*/
+.catalog-list {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.catalog-list li {
+    padding: 8px;
+    margin-left: 30px;
+    cursor: pointer;
+}
+.catalog-list .selected {
+    background-color: #ff9900;
+    border-radius: 8px;
+    color: white;
+}
+/*商品分类---------------------------------end*/
+
+
+
+/*滚动栏样式---------------------------------begin*/
+.movie-carousel{
+    width: 1150px;
+    height: 220px;
+    margin-top: 18px;
+    border-radius: 15px;
+    box-shadow: 0 3px 20px 2px rgba(89, 89, 89, 0.6);
+}
+/*滚动栏样式--------------------------------- end*/
+
+
+
+/*电影列表样式---------------------------------begin*/
+.goods-item {
+    margin: 20px;
+    padding: 10px;
+    width: 202px;
+    border-radius: 15px;
+}
+.goods-item:hover {
+    cursor: pointer;
+    box-shadow: 0 0 2px 2px #ff9900;
+}
+.item-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*图片*/
+.goods-item .cover {
+    height: 250px;
+    width: 180px;
+    border-radius: 9px;
+}
+.goods-item .goods-name {
+    margin-top: 7px;
+    line-height: 25px;
+    height: 25px;
+    font-size: 14px;
+    /*font-family: 微软雅黑;*/
+    color: #333333;
+    overflow: hidden;
+    text-align: center;
+}
+/*电影列表样式---------------------------------end*/
+
+
+
+
+/*商品详情样式---------------------------------begin*/
+.goods-detail-info-box {
+    display: flex;
+    width: 100%;
+    margin: 35px 0 40px 0;
+}
+.goods-detail-info-box .cover {
+    flex: 0.4;
+    margin-top: 2px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.movie-cover{
+    border-radius: 14px;
+    width: 280px;
+    border: 1px solid #cacaca;
+    box-shadow: 0px 3px 20px 2px rgba(89, 89, 89, 0.6);
+}
+
+.goods-detail-info-box .field {
+    flex: 0.6;
+    display: flex;
+    flex-direction: column;
+}
+.goods-detail-info-box .field .goods-title {
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    font-weight: bold;
+    width: 100%;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+/*收藏*/
+.goods-detail-info-box .field .rate .collect{
+    margin: 5px 0 0 12px;
+}
+/*评分*/
+.goods-detail-info-box .field .rate{
+    margin: 10px 0;
+    color: #333333;
+}
+/*商品属性*/
+.goods-property-box{
+    /*height: 320px;*/
+    width: 100%;
+}
+.goods-property-box .goods-property{
+    border-bottom: 1px solid #ccc;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+}
+.goods-property .property-name{
+    width: 100px;
+    margin-left: 20px;
+    font-size: 13.5px;
+    font-weight: bold;
+    color: #666;
+}
+.goods-property .property-value{
+    flex: 1;
+    font-size: 13.5px;
+}
+
+.goods-detail-content{
+    display: flex;
+    margin-top: 10px;
+}
+.goods-detail-content .video {
+    flex: 0.2;
+    margin-right: 10px;
+    height: 108px;
+    width: 192px;
+}
+.goods-detail-content .desc {
+    flex: 1;
+}
+.goods-detail-content .desc .introduce {
+    padding: 10px 0 0 20px;
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12);*/
+    /*margin-top: 10px;*/
+}
+
+/*商品详情样式---------------------------------end*/
+
+
+
+
+/*内容提示条---------------------------------start*/
+.tips-box{
+    display: flex;
+    align-items: center;
+    width: 800px;
+    color: #474747;
+}
+.tips-box .title{
+    padding-left: 10px;
+    font-weight: bolder;
+    color: #474747;
+    font-size: 20px;
+    line-height: 24px;
+}
+.tips-box .description{
+    padding-left: 15px;
+    font-size: 15px;
+    color: #5e5e5e;
+    line-height: 24px;
+}
+/*内容提示条---------------------------------end*/
+
+
+
+
+/*登录注册---------------------------------begin*/
+.container{
+    height: 100vh;
+    overflow: hidden;
+    /*background-image: url("@/assets/imgs/front/login-bg.jpg");*/
+    background-image: linear-gradient(26deg, #cbf2ff, #bcedff, #e0f3ff, #d5f5ff);
+    background-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container .register{
+    width: 400px;
+    padding: 30px 30px 30px 0;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 30px 0px rgba(59, 163, 221, 0.29);
+}
+.container .login{
+    width: 400px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 30px 0px rgba(59, 163, 221, 0.29);
+}
+.container .title{
+    text-align: center;
+    font-size: 25px;
+    color: #333;
+    margin-bottom: 20px;
+}
+/*登录注册---------------------------------end*/
+
+
+
+/*用户中心(左侧菜单)---------------------------------begin*/
+.user-main-box{
+    width: 100%;
+    display: flex;
+}
+.user-main-box .user-main-left{
+    background: #ffffff;
+    border-radius: 20px;
+    width: 200px;
+    height: 450px;
+    box-shadow: 0px 0px 30px 0px rgba(59, 163, 221, 0.29);
+    border-top-style:solid;
+    border-left-style:solid;
+    border-color: rgba(96, 199, 255, 0.84);
+    border-width:1.5px;
+
+}
+.user-main-left .title{
+    margin: 15px 20px;
+    font-weight: 900;
+}
+.user-main-box .user-main-right{
+    flex:1;
+    padding: 10px;
+    margin-left: 10px;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: saturate(150%) blur(8px);
+    border-radius: 15px;
+    box-shadow: 0px 0px 30px 0px rgba(59, 163, 221, 0.29);
+    border-top-style:solid;
+    border-left-style:solid;
+    border-color: rgba(255, 255, 255, 0.84);
+    border-width:1.5px;
+}
+/*用户中心(左侧菜单)---------------------------------end*/
+
+
+
+
+/*上传文件el-upload---------------------------------begin*/
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 140px;
+    height: 140px;
+    line-height: 140px;
+    text-align: center;
+}
+.avatar {
+    width: 140px;
+    height: 140px;
+}
+/*上传文件el-upload---------------------------------end*/
+
+
+
+/*用户菜单右侧列表样式---------------------------------begin*/
+.user-main-right .search{
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+.user-main-right .search .el-input{
+    margin-right: 10px;
+    width: 200px;
+}
+.user-main-right .operation{
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+.user-main-right .table{
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+.user-main-right .table .pagination{
+    margin-top: 10px;
+}
+/*用户菜单右侧列表样式---------------------------------begin*/
+
+
+
+/*电影评论---------------------------------begin*/
+.comments-container{
+    width: 80%;
+}
+.comments-container .comments-title-box{
+    margin: 35px 0 15px 0;
+    display: flex;
+    align-items: center;
+    color: #ff9900;
+}
+.comments-title-box .title-tip{
+    flex:1;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff9900;
+}
+.comments-head{
+    display: flex; align-items: center; margin-top:10px;
+}
+.comments-head .img{
+    width: 30px; height:30px; border-radius:50%;
+}
+.comments-head .nickname{
+    color: #333; margin:0 5px;
+}
+.comments-container .comments-content{
+    border-bottom: 1px solid #ccc; margin-top:5px; padding: 5px 30px;
+}
+.comments-content .reply{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 3px;
+}
+/*电影评论---------------------------------end*/
+
+
+
+
+/*新闻公告---------------------------------begin*/
+.news-container{
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.news-box{
+    width: 450px;
+    height: 300px;
+    margin: 40px;
+    border-radius: 15px;
+}
+.news-box .news-type-box{
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #ff9900;
+}
+.news-type-box .news-type{
+    flex:1;
+    color: #fff;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.news-type-box .more{
+    margin: 0 30px;
+    color: #ffffff;
+}
+li.news-item-box{
+    height: 250px;
+    overflow: hidden;
+}
+.news-item-box .news-item {
+    border-bottom: 1px solid #ccc;
+    height: 35px;
+    line-height: 35px;
+    display: flex;
+    align-items: center;
+}
+.news-item .title{
+    flex: 1;
+    margin-left: 20px;
+    font-size: 14px;
+    color: #666;
+}
+.news-item .publisher{
+    width: 80px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+/*新闻公告详情-标题*/
+.news-detail-header{
+    width: 70%;
+    margin: 30px auto;
+    display: flex;
+}
+.news-detail-title{
+    flex:1;
+    text-align: center;
+    font-size: 20px;
+}
+/*新闻公告详情-内容*/
+.new-detail-content{
+    width: 70%;
+    margin: 0 auto;
+    padding: 30px 10px;
+}
+
+/*新闻列表*/
+.news-list .search{
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+/*新闻列表*/
+.news-list .search .el-input{
+    margin-right: 10px;
+    width: 200px;
+}
+/*新闻公告---------------------------------end*/

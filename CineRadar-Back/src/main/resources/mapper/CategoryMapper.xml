@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.CategoryMapper">
+
+    <resultMap id="BaseResultMap" type="Category">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="cate_name" jdbcType="VARCHAR" property="cateName" />
+        <result column="intro" jdbcType="VARCHAR" property="intro" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,cate_name,intro
+    </sql>
+
+    <!--根据主键查询数据-->
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from category  where id=#{id}
+    </select>
+
+    <!--根据条件查询-->
+    <select id="select" parameterType="Category" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from category t where 1=1
+        <if test="cateName != null and '' != cateName">
+            and cate_name like CONCAT('%', #{cateName}, '%')
+        </if>
+        order by id asc
+    </select>
+
+    <!--插入数据-->
+    <insert id="insert" parameterType="Category">
+        insert into category (cate_name, intro)
+        values(#{cateName}, #{intro})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="Category">
+        update category
+        <set>
+            <if test="cateName != null and '' != cateName">
+                cate_name = #{cateName},
+            </if>
+            <if test="intro != null and '' != intro">
+                intro = #{intro},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteById">
+        delete from category WHERE id = #{id}
+    </delete>
+
+
+    <!--批量删除-->
+    <delete id="deleteBatch">
+        delete from category WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,55 @@
+#server.port=5000
+server:
+  port: 5000
+
+ip: localhost
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #报错的话加公钥检索 allowPublicKeyRetrieval=true&
+    url: jdbc:mysql://127.0.0.1:3306/movie_web?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2b8
+    username: root
+    password: 88888888
+
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.wztc.demo.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    call-setters-on-nulls: true
+
+minio:
+  url: http://127.0.0.1:19000 #minio服务端地址
+  accessKey: admin # 用户名
+  secretKey: 88888888 # 密码
+  bucketName: movieimage
+
+elasticsearch:
+  hosts: 127.0.0.1:9200
+  index: movies
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+
+#接口密钥
+api:
+  url: https://api.siliconflow.cn/v1/chat/completions
+  key: sk-kcanwaopealijzcjokpneghnlpkyobjmzxbvomaursjzlrzi
+
+#自定义权重-推荐电影-权重
+recommend:
+  weight:
+    collection: 10  #收藏权重
+    history: 1     #浏览足迹权重
+    comment: 1     #评论权重
+    #order: 10
+
+

@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 14.5px;
+    background-image: linear-gradient(26deg, #cbf2ff, #bcedff, #e0f3ff, #d5f5ff);
+    min-height: 100vh;
+    font-family: 'PingFang SC';
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}

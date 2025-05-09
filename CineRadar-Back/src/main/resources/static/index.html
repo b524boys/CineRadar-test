@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajax POST请求示例</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<form id="myForm">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id"><br><br>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username"><br><br>
+    <input type="submit" value="提交">
+</form>
+<div id="result"></div>
+
+<script>
+    $(document).ready(function() {
+        $("#myForm").submit(function(event) {
+            event.preventDefault(); // 阻止表单默认提交行为
+
+            var id = $("#id").val();
+            var username = $("#username").val();
+            var data = {
+                id: id,
+                username: username
+            };
+
+            $.ajax({
+                url: "http://localhost:5000/user/post1",
+                method: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function(response) {
+                    // 请求成功时的回调函数
+                    $("#result").text(JSON.stringify(response));
+                },
+                error: function(xhr, status, error) {
+                    // 请求失败时的回调函数
+                    console.log("请求失败：" + error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

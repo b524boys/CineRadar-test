@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.AttachMapper">
+
+    <resultMap id="BaseResultMap" type="Attach">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+        <result column="table_id" jdbcType="INTEGER" property="tableId" />
+        <result column="attach_file" jdbcType="VARCHAR" property="attachFile" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,table_name,table_id,attach_file,create_time
+    </sql>
+
+    <!--根据主键查询数据-->
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM attach where id=#{id}
+    </select>
+
+    <!--根据条件查询-->
+    <select id="select" parameterType="Attach" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from attach where 1=1
+        <if test="tableName != null and '' != tableName">
+            and table_name = #{tableName}
+        </if>
+        <if test="tableId != null and '' != tableId">
+            and table_id = #{tableId}
+        </if>
+    </select>
+
+    <!--插入数据-->
+    <insert id="insert" parameterType="Attach">
+        insert into attach (table_name, table_id, attach_file, create_time)
+        values(#{tableName}, #{tableId}, #{attachFile}, #{createTime})
+    </insert>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteById">
+        delete from attach WHERE id = #{id}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteBatch">
+        delete from attach WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

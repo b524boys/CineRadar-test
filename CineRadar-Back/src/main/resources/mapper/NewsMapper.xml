@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.NewsMapper">
+    <resultMap id="BaseResultMap" type="News">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="news_type_id" jdbcType="VARCHAR" property="newsTypeId" />
+        <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="cover" jdbcType="VARCHAR" property="cover" />
+        <result column="hits" jdbcType="INTEGER" property="hits" />
+        <result column="top" jdbcType="INTEGER" property="top" />
+        <result column="publisher" jdbcType="VARCHAR" property="publisher" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, title, news_type_id, content, cover, hits, top, publisher, create_time
+    </sql>
+
+    <!--根据主键查询数据-->
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from news  where id=#{id}
+    </select>
+
+
+    <!--根据存储过程查询数据-->
+    <select id="selectByIdProcedure" parameterType="Integer" resultMap="BaseResultMap" statementType="CALLABLE">
+        {call SelectNewsByIdProcedure(#{id,mode=IN})}
+    </select>
+
+    <!--根据条件查询-->
+    <select id="select" parameterType="News" resultMap="BaseResultMap">
+        SELECT n.id, n.title, n.news_type_id, nt.type_name, n.content, n.cover, n.hits, n.top, n.publisher, n.create_time
+        FROM news n
+        LEFT JOIN news_type nt ON n.news_type_id=nt.id
+        WHERE 1=1
+        <if test="title != null and '' != title">
+            and n.title like VagueFunction(#{title})
+        </if>
+        <if test="newsTypeId != null">
+            and n.news_type_id = #{newsTypeId}
+        </if>
+        <if test="cover != null">
+            and n.cover is not null
+        </if>
+        <if test="top != null">
+            and n.top = #{top}
+        </if>
+        order by n.id desc
+    </select>
+
+    <!--视图  条件查询-->
+    <select id="selectByView" parameterType="News" resultMap="BaseResultMap">
+        SELECT * from NewsView n
+        WHERE 1=1
+        <if test="title != null and '' != title">
+            and n.title like CONCAT('%', #{title}, '%')
+        </if>
+        <if test="newsTypeId != null">
+            and n.news_type_id = #{newsTypeId}
+        </if>
+        <if test="cover != null">
+            and n.cover is not null
+        </if>
+        <if test="top != null">
+            and n.top = #{top}
+        </if>
+        order by n.id desc
+    </select>
+
+
+    <!--插入数据-->
+    <insert id="insert" parameterType="News">
+        insert into news (title, news_type_id, content, cover, hits, top, publisher, create_time)
+        values(#{title}, #{newsTypeId}, #{content}, #{cover}, #{hits}, #{top}, #{publisher}, #{createTime})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="News">
+        update news
+        <set>
+            <if test="title != null and '' != title">
+                title = #{title},
+            </if>
+            <if test="newsTypeId != null">
+                news_type_id = #{newsTypeId},
+            </if>
+            <if test="content != null and '' != content">
+                content = #{content},
+            </if>
+            <if test="cover != null and '' != cover">
+                cover = #{cover},
+            </if>
+            <if test="hits != null">
+                hits = #{hits},
+            </if>
+            <if test="top != null">
+                top = #{top},
+            </if>
+            <if test="publisher != null and '' != publisher">
+                publisher = #{publisher},
+            </if>
+            <if test="createTime != null and '' != createTime">
+                create_time = #{createTime},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteById">
+        delete from news WHERE id = #{id}
+    </delete>
+
+
+    <!--批量删除-->
+    <delete id="deleteBatch">
+        delete from news WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

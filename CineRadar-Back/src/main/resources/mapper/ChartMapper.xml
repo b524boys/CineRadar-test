@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.ChartMapper">
+
+    <select id="getUserCount" resultType="int">
+        SELECT count(*) FROM user t
+    </select>
+
+    <select id="getGoodsCount" resultType="int">
+        SELECT count(*) FROM goods t
+    </select>
+
+
+    <select id="getHitCount" resultType="int">
+        SELECT sum(t.hits) FROM goods t
+    </select>
+
+    <select id="getCommentsCount" resultType="int">
+        SELECT count(*) FROM comments t where t.level=1
+    </select>
+
+    <select id="userRegister" parameterType="map" resultType="map">
+        SELECT t.create_time AS name, count(*) AS value FROM user t
+        where 1=1
+        <if test="dateStart != null and '' != dateStart">
+            and t.create_time &gt;= #{dateStart}
+        </if>
+        <if test="dateEnd != null and '' != dateEnd">
+            and t.create_time &lt;= #{dateEnd}
+        </if>
+        GROUP BY t.`create_time`
+    </select>
+
+
+    <!--统计电影类型对应的电影数量  类似炸裂函数, 将一行按照指定分隔符拆分成多行-->
+    <select id="cateCount" resultType="map">
+        SELECT name, COUNT(*) value FROM(
+            SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(cate_name, ',', n.digit+1), ',', -1) AS name
+            FROM goods
+            JOIN
+            (
+            SELECT 0 AS digit
+            UNION ALL SELECT 1
+            UNION ALL SELECT 2
+            UNION ALL SELECT 3
+            UNION ALL SELECT 4
+            UNION ALL SELECT 5
+            UNION ALL SELECT 6
+            UNION ALL SELECT 7
+            UNION ALL SELECT 8
+            UNION ALL SELECT 9
+            ) n
+            ON LENGTH(REPLACE(cate_name, ',' , '')) &lt;= LENGTH(cate_name) - n.digit
+            ORDER BY id, n.digit
+            )t GROUP BY t.name ORDER BY value DESC LIMIT 10
+    </select>
+
+    <!--统计演员出演的电影数量-->
+    <select id="castCount" resultType="map">
+        SELECT name, COUNT(*) value FROM(
+            SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(casts, ',', n.digit+1), ',', -1) AS name
+            FROM goods
+            JOIN
+            (
+            SELECT 0 AS digit
+            UNION ALL SELECT 1
+            UNION ALL SELECT 2
+            UNION ALL SELECT 3
+            UNION ALL SELECT 4
+            UNION ALL SELECT 5
+            UNION ALL SELECT 6
+            UNION ALL SELECT 7
+            UNION ALL SELECT 8
+            UNION ALL SELECT 9
+            ) n
+            ON LENGTH(REPLACE(casts, '/' , '')) &lt;= LENGTH(casts) - n.digit
+            ORDER BY id, n.digit
+            )t GROUP BY t.name ORDER BY value DESC LIMIT 10
+    </select>
+
+    <!--统计各年份电影上映数量-->
+    <select id="yearCount" resultType="map">
+        select year name,count(*) value from goods t where t.year is not null group by t.year order by name asc
+    </select>
+</mapper>

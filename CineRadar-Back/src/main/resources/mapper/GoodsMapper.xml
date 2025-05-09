@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.GoodsMapper">
+
+    <resultMap id="BaseResultMap" type="Goods">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+        <result column="cate_name" jdbcType="VARCHAR" property="cateName" />
+        <result column="cover" jdbcType="VARCHAR" property="cover" />
+        <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+        <result column="hits" jdbcType="INTEGER" property="hits" />
+        <result column="video_url" jdbcType="VARCHAR" property="videoUrl"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="director" jdbcType="VARCHAR" property="director"/>
+        <result column="casts" jdbcType="VARCHAR" property="casts"/>
+        <result column="year" jdbcType="VARCHAR" property="year"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="duration" jdbcType="INTEGER" property="duration"/>
+        <result column="rating" jdbcType="DOUBLE" property="rating"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,goods_name,cate_name,cover,introduce,hits,video_url,create_time,
+            director, casts, year, country, duration, rating
+    </sql>
+
+    <!--根据主键查询数据-->
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from goods  where id=#{id}
+    </select>
+
+    <!--根据电影名称查询数据-->
+    <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
+        select
+        id, goods_name, cate_name, cover, director, casts, country, year, rating
+        from goods  where goods_name = #{name}
+    </select>
+
+    <!--根据条件查询-->
+    <select id="select" parameterType="Goods" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from goods g where 1=1
+        <if test="goodsName != null and '' != goodsName">
+            and goods_name = #{goodsName}
+        </if>
+        <if test="searchGoodsName != null and '' != searchGoodsName">
+            and goods_name like  concat('%', #{searchGoodsName},'%')
+        </if>
+        <if test="cateName != null">
+            and cate_name like concat('%', #{cateName},'%')
+        </if>
+        order by g.id desc
+    </select>
+
+    <!--根据ids 批量查询数据-->
+    <select id="selectGoods"  resultMap="BaseResultMap">
+        select * from goods   WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by field(id,<foreach item="id" collection="ids" open="" separator="," close="">#{id}</foreach>)
+    </select>
+
+    <!--查询热门电影-->
+    <select id="selectHotGoods"  resultMap="BaseResultMap">
+        select * from goods order by hits desc limit 8
+    </select>
+
+    <select id="getCollectedMovies">
+        SELECT GROUP_CONCAT(g.goods_name SEPARATOR ', ') AS collected_movies
+        FROM collect c JOIN goods g ON c.goods_id = g.id
+        WHERE c.user_id = #{userId}
+    </select>
+
+    <select id="getRatedMovies">
+        SELECT GROUP_CONCAT(CONCAT(g.goods_name, ':', c.rate) SEPARATOR ', ') AS rated_movies
+        FROM comments c JOIN goods g ON c.goods_id = g.id
+        WHERE c.user_id = #{userId} AND c.rate IS NOT NULL
+    </select>
+
+    <!--插入数据-->
+    <insert id="insert" parameterType="Goods">
+        insert into goods (goods_name, cate_name, cover, introduce, video_url, create_time, director, casts, year, country, duration, rating)
+        values(#{goodsName}, #{cateName},  #{cover}, #{introduce}, #{videoUrl}, #{createTime}, #{director}, #{casts}, #{year}, #{country}, #{duration}, #{rating})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="Goods">
+        update goods
+        <set>
+            <if test="goodsName != null and '' != goodsName">
+                goods_name = #{goodsName},
+            </if>
+            <if test="cateName != null">
+                cate_name = #{cateName},
+            </if>
+            <if test="cover != null and '' != cover">
+                cover = #{cover},
+            </if>
+            <if test="introduce != null and '' != introduce">
+                introduce = #{introduce},
+            </if>
+            <if test="hits != null">
+                hits = #{hits},
+            </if>
+            <if test="videoUrl != null">
+                video_url = #{videoUrl},
+            </if>
+            <if test="createTime != null">
+            </if>
+
+
+            <if test="director != null and '' != director">
+                director = #{director},
+            </if>
+            <if test="casts != null and '' != casts">
+                casts = #{casts},
+            </if>
+            <if test="year != null and '' != year">
+                year = #{year},
+            </if>
+            <if test="country != null and '' != country">
+                country = #{country},
+            </if>
+            <if test="duration != null">
+                duration = #{duration},
+            </if>
+            <if test="rating != null">
+                rating = #{rating},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteById">
+        delete from goods WHERE id = #{id}
+    </delete>
+
+
+    <!--批量删除-->
+    <delete id="deleteBatch">
+        delete from goods WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

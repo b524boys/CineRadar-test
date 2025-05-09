@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.RecommendMapper">
+
+    <!-- 电影推荐-权重总分倒序排序 -->
+    <select id="recommendListByWeight" resultType="java.util.Map">
+        SELECT
+            g.id AS goods_id,
+            IFNULL( c.collect_count, 0 ) collect_count,
+            IFNULL( h.history_count, 0 ) history_count,
+            IFNULL( cm.comments_rate, 0 ) comments_rate,
+            (
+                        IFNULL( c.collect_count, 0 ) * #{collectWeight} +
+                        IFNULL( h.history_count, 0 ) * #{historyWeight} +
+                        IFNULL( cm.comments_rate, 0 ) * #{commentWeight}
+                ) AS total_score
+        FROM goods g
+                 LEFT JOIN ( SELECT goods_id, COUNT( * ) AS collect_count FROM collect GROUP BY goods_id ) c
+                           ON g.id = c.goods_id
+                 LEFT JOIN ( SELECT goods_id, COUNT( * ) AS history_count FROM history GROUP BY goods_id ) h
+                           ON g.id = h.goods_id
+                 LEFT JOIN ( SELECT goods_id, SUM(IFNULL(rate,0)) AS comments_rate FROM comments WHERE LEVEL = 1 GROUP BY goods_id  ) cm
+                           ON g.id = cm.goods_id
+        ORDER BY total_score DESC
+    </select>
+
+</mapper>

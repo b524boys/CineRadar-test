@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.CarouselMapper">
+
+    <resultMap id="BaseResultMap" type="Carousel">
+        <id column="id" property="id"/>
+        <result column="carousel_name" property="carouselName"/>
+        <result column="carousel_cover" property="carouselCover"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, carousel_name,carousel_cover
+    </sql>
+
+    <select id="select" resultMap="BaseResultMap">
+        SELECT * FROM carousel WHERE 1 = 1
+        <if test="carouselName != null and '' != carouselName">
+            and carousel_name like CONCAT('%', #{carouselName}, '%')
+        </if>
+        order by id desc
+    </select>
+
+    <!--根据主键查询数据-->
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from carousel  where id=#{id}
+    </select>
+
+    <!--插入数据-->
+    <insert id="insert" parameterType="Carousel">
+        insert into carousel (carousel_name, carousel_cover)
+        values(#{carouselName}, #{carouselCover})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="Carousel">
+        update carousel
+        <set>
+            <if test="carouselName != null and '' != carouselName">
+                carousel_name = #{carouselName},
+            </if>
+            <if test="carouselCover != null and '' != carouselCover">
+                carousel_cover = #{carouselCover},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteById">
+        delete from carousel WHERE id = #{id}
+    </delete>
+
+
+    <!--批量删除-->
+    <delete id="deleteBatch">
+        delete from carousel WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

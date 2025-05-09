@@ -1,0 +1,248 @@
+.manager-container{
+    background-color: #DCDFE6;
+    min-height: 100vh;
+}
+
+.manager-top{
+    /*border: 1px solid red;*/
+    display: flex;
+    background-color: #303133;
+}
+
+/*顶部条左侧---------------------------------begin*/
+.manager-top-left{
+    width: 200px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    /*border: 1px solid red;*/
+}
+.manager-top-left .title{
+    flex: 1;
+    margin-left: 5px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #9ed8ff;
+    /*border: 1px solid red;*/
+}
+/*顶部条左侧---------------------------------end*/
+
+
+
+/*面包屑 中部---------------------------------begin*/
+.manager-top-breadcrumb{
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.el-breadcrumb__inner{
+    color: #EBEEF5 !important;
+}
+.el-breadcrumb{
+    margin-left: 10px;
+}
+/*面包屑 中部---------------------------------ends*/
+
+
+
+/*管理员信息 右侧---------------------------------begin*/
+.manager-top-right{
+    /*border:1px solid blue;*/
+    width: 200px;
+    display: flex;
+    align-items: center;
+    cursor: default;
+    justify-content: flex-end;
+}
+.manager-top-right .head{
+    display: flex;
+    align-items: center;
+    padding-right: 30px;
+    color: #EBEEF5;
+}
+.manager-top-right .head img{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+/*管理员信息 右侧---------------------------------end*/
+
+
+
+/*主体 左右---------------------------------begin*/
+.manager-main{
+    display: flex;
+}
+.manager-main .manager-main-left{
+    width: 200px;
+    min-height: calc(100vh - 60px);
+    box-shadow: 0 0 6px rgba(0, 21, 41, .35);
+}
+.manager-main .manager-main-right{
+    flex: 1;
+    padding: 10px;
+}
+/*主体 左右---------------------------------end*/
+
+
+
+/*菜单样式---------------------------------begin*/
+.el-menu{
+    width: 200px;
+    height: 100%;
+    background-color: #303133;
+}
+.el-menu-item{
+    color: #dddddd;
+    height: 50px;
+    line-height: 50px;
+    background-color: #303133 !important;
+}
+.el-submenu__title{
+    color: #dddddd;
+    height: 40px;
+    line-height: 40px;
+}
+.el-menu-item:hover{
+    background-color: #222222 !important;
+}
+.el-submenu__title:hover{
+    background-color: #222222 !important;
+}
+.el-menu--inline .el-menu-item{
+    padding-left: 50px !important;
+}
+/*菜单样式---------------------------------end*/
+
+/*右侧管理---------------------------------begin*/
+.manager-main-right .search{
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+.search .el-input{
+    margin-right: 10px;
+    width: 200px;
+}
+.manager-main-right .operation{
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+.manager-main-right .table{
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+.manager-main-right .table .pagination{
+    margin-top: 10px;
+}
+/*右侧管理---------------------------------end*/
+
+
+/*上传样式---------------------------------begin*/
+.avatar-uploader {
+    border: 1px dashed var(--el-border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--el-transition-duration-fast);
+}
+.avatar-uploader:hover {
+    border-color: var(--el-color-primary);
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 140px;
+    height: 140px;
+    text-align: center;
+}
+.avatar {
+    width: 140px;
+    height: 140px;
+    display: block;
+}
+/*上传样式---------------------------------end*/
+
+
+
+
+/*后端登录页面---------------------------------begin*/
+.container{
+    height: 100vh;
+    overflow: hidden;
+    /*background-image: url("@/assets/imgs/manage/login_bk.png");*/
+    background-image: linear-gradient(26deg, #cbf2ff, #bcedff, #e0f3ff, #d5f5ff);
+    background-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.container .login{
+    width: 400px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 30px 0px rgba(59, 163, 221, 0.29);
+}
+.login .title{
+    text-align: center;
+    font-size: 20px;
+    color: #303133;
+    margin-bottom: 20px;
+}
+/*后端登录页面---------------------------------end*/
+
+
+
+/*后台首页统计---------------------------------begin*/
+.summary-container{
+    margin:0px;
+    display: flex;
+}
+.summary-container .summary-item{
+    flex: 0.15;
+    display: flex;
+    align-items: center;
+    height: 70px;
+    background-color: rgb(231,233,248);
+    margin-right: 5px;
+}
+.summary-container .summary-item:nth-child(1){
+    background-color: rgb(231,233,248);
+}
+.summary-container .summary-item:nth-child(2){
+    background-color: rgb(230,248,248);
+}
+.summary-container .summary-item:nth-child(3){
+    background-color: rgb(231,247,234);
+}
+.summary-container .summary-item:nth-child(4){
+    background-color: rgb(247,248,230);
+}
+.summary-item .tip-icon{
+    flex: 1;
+    text-align: right;
+    font-size:30px;
+}
+/*主轴为y*/
+.summary-item .item-data{
+    flex: 3; display: flex; flex-direction: column; align-items: center;
+}
+.item-data .data-name{
+    color: gray; margin-bottom: 5px;
+}
+.item-data .data-value{
+    color: rgb(99,99,99); font-size: 25px;
+}
+/*后台首页统计---------------------------------end*/

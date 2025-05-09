@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wztc.demo.mapper.CommentsMapper">
+
+    <resultMap id="BaseResultMap" type="Comments">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+        <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+        <result column="reply_user_id" jdbcType="INTEGER" property="replyUserId" />
+        <result column="reply_user_name" jdbcType="VARCHAR" property="replyUserName" />
+        <result column="reply_nick_name" jdbcType="VARCHAR" property="replyNickName" />
+        <result column="reply_head_img" jdbcType="VARCHAR" property="replyHeadImg" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="level" jdbcType="TINYINT" property="level" />
+        <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+        <result column="rate" jdbcType="DOUBLE" property="rate" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    </resultMap>
+
+    <!--根据主键查询数据-->
+    <select id="selectById" parameterType="Integer" resultMap="BaseResultMap">
+        SELECT c.id,c.goods_id,g.goods_name,c.user_id,u.user_name,u.nick_name,u.head_img,u1.user_name reply_user_name, u1.nick_name reply_nick_name, u1.head_img reply_head_img,
+               c.content,c.level,c.parent_id,c.rate,c.create_time FROM comments c
+                                                                           LEFT JOIN goods g ON c.goods_id=g.id
+                                                                           LEFT JOIN USER u ON c.user_id=u.id
+                                                                           LEFT JOIN USER u1 ON c.reply_user_id=u1.id
+        where c.id=#{id}
+    </select>
+
+    <!--根据条件查询-->
+    <select id="select" parameterType="Comments" resultMap="BaseResultMap">
+        SELECT c.id,c.goods_id,g.goods_name,c.user_id,u.user_name,u.nick_name,u.head_img,u1.user_name reply_user_name, u1.nick_name reply_nick_name, u1.head_img reply_head_img,
+        c.content,c.level,c.parent_id,c.rate,c.create_time FROM comments c
+        LEFT JOIN goods g ON c.goods_id=g.id
+        LEFT JOIN USER u ON c.user_id=u.id
+        LEFT JOIN USER u1 ON c.reply_user_id=u1.id
+        where 1=1
+        <if test="userId != null and '' != userId">
+            and c.user_id = #{userId}
+        </if>
+        <if test="userName != null and '' != userName">
+            and u.user_name = #{userName}
+        </if>
+        <if test="goodsId != null and '' != goodsId">
+            and c.goods_id = #{goodsId}
+        </if>
+        <if test="goodsName != null and '' != goodsName">
+            and g.goods_name like CONCAT('%', #{goodsName}, '%')
+        </if>
+        <if test="content != null and '' != content">
+            and c.content like CONCAT('%',#{content},'%')
+        </if>
+        <if test="level != null">
+            and c.level = #{level}
+        </if>
+        <if test="parentId != null">
+            and c.parent_id = #{parentId}
+        </if>
+        <if test="level == 1">
+            order by c.id desc
+        </if>
+        <if test="level == 2">
+            order by c.id asc
+        </if>
+    </select>
+
+
+    <!-- 查询所有用户评分 -->
+    <select id="selectCommentsRate" resultMap="BaseResultMap">
+        SELECT goods_id,user_id, SUM(IFNULL(rate, 0.0))  AS rate
+        FROM comments WHERE LEVEL = 1 GROUP BY goods_id,user_id
+    </select>
+
+    <!--插入数据-->
+    <insert id="insert" parameterType="Comments" useGeneratedKeys="true" keyProperty="id">
+        insert into comments (user_id, reply_user_id, goods_id, content, parent_id, level, rate, create_time)
+        values(#{userId}, #{replyUserId}, #{goodsId}, #{content}, #{parentId}, #{level}, #{rate}, #{createTime})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="Comments">
+        update comments
+        <set>
+            <if test="replyUserId != null">
+                reply_user_id = #{replyUserId},
+            </if>
+            <if test="content != null and '' != content">
+                content = #{content},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="rate != null">
+                rate = #{rate},
+            </if>
+            <if test="createTime != null and '' != createTime">
+                create_time = #{createTime},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteById">
+        delete from comments WHERE id = #{id}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteBatch">
+        delete from comments WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
